@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt; plt.rc("font", size=14)
 
 
-def chi_square(data_df: pd.DataFrame):
+def chi_square(data_df: pd.DataFrame, output_file=None):
     counts_df = data_df.groupby('DO')['fraudulent'].value_counts()
     print(counts_df.head())
     categories = ('DO', 'MD')
@@ -18,6 +18,9 @@ def chi_square(data_df: pd.DataFrame):
     plt.xticks(y_pos, categories)
     plt.ylabel('Fraudulent doctors/1k')
     plt.title('Fraudulent doctors by License Type')
-    
-    # plt.show()
-    plt.savefig(fname='figures/fraud_vs_gender_5y_bar.png', dpi=600, format='png', bbox_inches='tight') # use format='svg' or 'pdf' for vectorial pictures
+
+    if output_file is None:
+        plt.show()
+    else:
+        # TODO: test that file exists
+        plt.savefig(fname=output_file, dpi=600, format='png', bbox_inches='tight') # use format='svg' or 'pdf' for vectorial pictures
